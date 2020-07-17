@@ -77,6 +77,44 @@ app.post("/register", (req, res) => {
 app.get("/user", (req, res) => {
   res.send(req.user); // The req.user stores the entire user that has been authenticated inside of it.
 });
+
+app.get("/logout", (req, res) => {
+  req.logout();
+  res.send("success");
+});
+
+function AdminAuthenticationMiddleware(req, res, next) {
+  if (req.isAuthenticated()) {
+    if (req.user) {
+      if (req.user.username == "nathanielwoodbury") {
+        // Could Plug a List into Here... Again
+        // If We Made It This Far, We Are Authenticated
+        next();
+      }
+    }
+  }
+}
+
+app.get("/admin/getUsers", AdminAuthenticationMiddleware, (req, res) => {
+  // We need to authenticate that this user is a admin.
+
+  // We are valid if we made it this far
+  User.find({}, (err, doc) => {
+    if (err) throw err;
+    const revised = doc.filter((user) => user.username !== "nathanielwoodbury");
+    // Send back passwords to the client because youre a boss and like insecure systems with potential data breaches
+
+    res.send(revised);
+  });
+});
+
+app.post("/admin/deleteUser", AdminAuthenticationMiddleware, (req, res) => {
+  User.findByIdAndDelete(req.body.id, (err) => {
+    if (err) throw err;
+  });
+  res.send("complete");
+});
+
 //----------------------------------------- END OF ROUTES---------------------------------------------------
 //Start Server
 app.listen(4000, () => {

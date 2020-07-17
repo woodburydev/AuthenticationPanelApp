@@ -25,10 +25,19 @@ module.exports = function (passport) {
   });
   passport.deserializeUser((id, cb) => {
     User.findOne({ _id: id }, (err, user) => {
-      const userInformation = {
-        username: user.username,
-      };
-      cb(err, userInformation);
+      // Lets define a user to get admin privileges!
+      if (user.username == "nathanielwoodbury") {
+        const userInformation = {
+          username: user.username,
+          admin: true,
+        };
+        cb(err, userInformation);
+      } else {
+        const userInformation = {
+          username: user.username,
+        };
+        cb(err, userInformation);
+      }
     });
   });
 };

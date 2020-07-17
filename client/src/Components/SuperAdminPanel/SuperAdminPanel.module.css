@@ -1,0 +1,18 @@
+.AdminPage {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100vw;
+  height: 100%;
+}
+
+.RegisteredUsers {
+  text-align: left;
+  margin-top: 20px;
+}
+.UserContainer {
+  text-align: left;
+  margin: 25px 0 25px 0;
+}

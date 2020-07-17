@@ -1,0 +1,16 @@
+.NavBar ul {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100vw;
+  height: 100px;
+  background-color: black;
+}
+
+.NavBar ul li,
+.NavBar ul li a {
+  color: white;
+  list-style: none;
+  cursor: pointer;
+  text-decoration: none;
+}
